@@ -165,7 +165,7 @@ const createWebRtcTransport = async (callback) => {
       listenIps: [
         {
           ip: '0.0.0.0',
-          announcedIp: '127.0.0.1', // replace with your public IP if needed
+          announcedIp: process.env.RENDER_EXTERNAL_HOSTNAME, // replace with your public IP if needed
         },
       ],
       enableUdp: true,
@@ -206,6 +206,6 @@ const createWebRtcTransport = async (callback) => {
   }
 };
 
-httpServer.listen(3000, () => {
+httpServer.listen(process.env.PORT || 3000, () => {
   console.log('listening on port: 3000 (HTTP)');
 });
