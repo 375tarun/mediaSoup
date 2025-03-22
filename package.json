@@ -16,6 +16,7 @@
     "mediasoup-client": "^3.9.5",
     "nodemon": "^3.1.9",
     "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
     "socketio": "^1.0.0",
     "util": "^0.12.5",
     "ws": "^8.18.1"
