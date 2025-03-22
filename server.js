@@ -162,12 +162,7 @@ peers.on('connection', async (socket) => {
 const createWebRtcTransport = async (callback) => {
   try {
     const webRtcTransport_options = {
-      listenIps: [
-        {
-          ip: '0.0.0.0',
-          announcedIp: process.env.RENDER_EXTERNAL_HOSTNAME, // replace with your public IP if needed
-        },
-      ],
+      listenIps: [{ ip: '0.0.0.0', announcedIp: process.env.RENDER_EXTERNAL_HOSTNAME || '127.0.0.1' }],
       enableUdp: true,
       enableTcp: true,
       preferUdp: true,
