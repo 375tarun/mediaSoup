@@ -57,7 +57,7 @@ const createDevice = async () => {
     if (error.name === 'UnsupportedError') {
       alert('Browser not supported for mediasoup.');
     } else {
-        alert('Failed to create mediasoup device.');
+      alert('Failed to create mediasoup device.');
     }
   }
 };
@@ -120,7 +120,7 @@ const connectSendTransport = async () => {
     producer.on('transportclose', () => {
       console.log('Transport ended');
     });
-  } catch(error){
+  } catch (error) {
     console.error("error producing:", error);
     alert("failed to produce the local stream");
   }
@@ -166,11 +166,18 @@ const connectRecvTransport = async () => {
       });
 
       const { track } = consumer;
+      console.log("Track kind: ", track.kind);
+      console.log("Track readyState: ", track.readyState);
+      track.onmute = () => console.log("Track muted");
+      track.onunmute = () => console.log("Track unmuted");
+      track.onended = () => console.log("Track ended");
       remoteVideo.srcObject = new MediaStream([track]);
+      remoteVideo.play().catch(e => console.error("remoteVideo.play() failed", e));
+
       socket.emit('consumer-resume');
-    } catch(error){
-        console.error("error consuming:", error);
-        alert("failed to consume the remote stream");
+    } catch (error) {
+      console.error("error consuming:", error);
+      alert("failed to consume the remote stream");
     }
   });
 };
