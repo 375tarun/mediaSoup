@@ -82,7 +82,14 @@ const createSendTransport = () => {
       return;
     }
     console.log('Send transport params:', params);
-    producerTransport = device.createSendTransport(params);
+
+    // Extract iceServers from params
+    const { iceServers, ...transportParams } = params;
+
+    producerTransport = device.createSendTransport({
+      ...transportParams,
+      iceServers, // Add iceServers
+    });
 
     producerTransport.on('connect', async ({ dtlsParameters }, callback, errback) => {
       try {
@@ -121,8 +128,8 @@ const connectSendTransport = async () => {
       console.log('Transport ended');
     });
   } catch (error) {
-    console.error("error producing:", error);
-    alert("failed to produce the local stream");
+    console.error('error producing:', error);
+    alert('failed to produce the local stream');
   }
 };
 
@@ -134,7 +141,14 @@ const createRecvTransport = async () => {
       return;
     }
     console.log('Receive transport params:', params);
-    consumerTransport = device.createRecvTransport(params);
+
+    // Extract iceServers from params
+    const { iceServers, ...transportParams } = params;
+
+    consumerTransport = device.createRecvTransport({
+      ...transportParams,
+      iceServers, // Add iceServers
+    });
 
     consumerTransport.on('connect', async ({ dtlsParameters }, callback, errback) => {
       try {
@@ -166,18 +180,18 @@ const connectRecvTransport = async () => {
       });
 
       const { track } = consumer;
-      console.log("Track kind: ", track.kind);
-      console.log("Track readyState: ", track.readyState);
-      track.onmute = () => console.log("Track muted");
-      track.onunmute = () => console.log("Track unmuted");
-      track.onended = () => console.log("Track ended");
+      console.log('Track kind: ', track.kind);
+      console.log('Track readyState: ', track.readyState);
+      track.onmute = () => console.log('Track muted');
+      track.onunmute = () => console.log('Track unmuted');
+      track.onended = () => console.log('Track ended');
       remoteVideo.srcObject = new MediaStream([track]);
-      remoteVideo.play().catch(e => console.error("remoteVideo.play() failed", e));
+      remoteVideo.play().catch(e => console.error('remoteVideo.play() failed', e));
 
       socket.emit('consumer-resume');
     } catch (error) {
-      console.error("error consuming:", error);
-      alert("failed to consume the remote stream");
+      console.error('error consuming:', error);
+      alert('failed to consume the remote stream');
     }
   });
 };

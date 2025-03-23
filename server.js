@@ -167,6 +167,11 @@ const createWebRtcTransport = async (callback) => {
       enableUdp: true,
       enableTcp: true,
       preferUdp: true,
+      // Add STUN servers here.
+      iceServers: [
+        { urls: 'stun:stun.l.google.com:19302' },
+        { urls: 'stun:stun1.l.google.com:19302' },
+      ],
     };
 
     let transport = await router.createWebRtcTransport(webRtcTransport_options);
