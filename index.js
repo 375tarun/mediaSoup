@@ -1,5 +1,5 @@
-const io = require('socket.io-client');
-const mediasoupClient = require('mediasoup-client');
+import io from 'socket.io-client';
+import { Device } from 'mediasoup-client';
 
 const socket = io('/mediasoup');
 
@@ -49,7 +49,7 @@ const getLocalStream = () => {
 
 const createDevice = async () => {
   try {
-    device = new mediasoupClient.Device();
+    device = new Device();
     await device.load({ routerRtpCapabilities: rtpCapabilities });
     console.log('RTP Capabilities:', device.rtpCapabilities);
   } catch (error) {
