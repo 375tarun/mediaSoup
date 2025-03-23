@@ -15,7 +15,8 @@ app.use('/sfu', express.static(path.join(__dirname, 'public'))); // Use the exis
 
 const httpServer = http.createServer(app);
 
-
+const hostname = process.env.RENDER_EXTERNAL_HOSTNAME;
+console.log("Render hostname:", hostname); //to verify that it is being read.
 
 const io = new Server(httpServer);
 
